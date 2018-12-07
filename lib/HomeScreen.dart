@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'data/Word.dart';
+import 'data/word.dart';
+import 'data/database.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,7 +13,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _englishTextController = TextEditingController();
 
+  final dbHelper = DBHelper();
+
   List<Word> _listOfWords = List();
+
+  @override
+  void initState() {
+    super.initState();
+    dbHelper.getWords().then((words) {
+      setState(() {
+        _listOfWords.addAll(words);
+      });
+    }, onError: () => {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
     var spanishWord = _spanishTextController.text;
     var englishTranslation = _englishTextController.text;
     if (spanishWord.isNotEmpty && englishTranslation.isNotEmpty) {
+      var word = Word(spanishWord, englishTranslation);
+      dbHelper.saveWord(word);
       setState(() {
-        _listOfWords.add(Word(spanishWord, englishTranslation));
+        _listOfWords.add(word);
       });
       _spanishTextController.clear();
       _englishTextController.clear();
