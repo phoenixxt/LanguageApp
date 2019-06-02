@@ -1,10 +1,21 @@
 import 'package:flutter/widgets.dart';
-import 'package:language_app/data/api/DioProvider.dart';
-import 'package:language_app/data/api/api.dart';
 import 'package:language_app/data/entities/random_word.dart';
 import 'package:language_app/domain/random_word_interactor.dart';
+import 'package:language_app/presentation/inject_injereted_widget/app_inject_widget.dart';
 
-class WordListScreen extends StatefulWidget {
+import 'inject_injereted_widget/word_list_inject_widget.dart';
+
+class WordListScreen extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return WordListInjectWidget(
+      child: WordListStatefulWidget(),
+      appDependencyProvider: AppInjectWidget.of(context).getAppDependencyProvider());
+  }
+}
+
+class WordListStatefulWidget extends StatefulWidget {
 
   @override
   State createState() {
@@ -12,7 +23,7 @@ class WordListScreen extends StatefulWidget {
   }
 }
 
-class _WordListState extends State<WordListScreen> {
+class _WordListState extends State<WordListStatefulWidget> {
 
   RandomWordInteractor _randomWordInteractor;
 
@@ -24,14 +35,17 @@ class _WordListState extends State<WordListScreen> {
   }
 
   @override
-  void initState() {
-    if (_randomWordInteractor == null) {
-      _randomWordInteractor = RandomWordInteractor(Api(DioProvider().getDioClient()));
-    }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _randomWordInteractor = WordListInjectWidget
+        .of(context)
+        .getWordListDependencyProvider()
+        .getRandomWordInteractor();
     _randomWordInteractor.getRandomWordsList().then((randomWordList) => {
       this.setState(() {
         _randomWordList = randomWordList;
       })
     });
   }
+
 }
