@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'HomeScreen.dart';
+import 'package:language_app/presentation/word_list.dart';
+
+import 'presentation/add_word_screen.dart';
 
 void main() => runApp(new LanguageApp());
 
@@ -13,7 +15,7 @@ class LanguageApp extends StatelessWidget {
         theme: new ThemeData(
             primarySwatch: Colors.blue
         ),
-        home: new HomeScreen()
+        home: new WordListScreen()
     );
   }
 }
