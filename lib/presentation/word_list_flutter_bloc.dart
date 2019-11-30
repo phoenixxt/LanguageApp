@@ -10,6 +10,7 @@ class WordFlutterBlockPage extends StatelessWidget {
     final listBloc = BlocProvider.of<ListBloc>(context);
     return BlocBuilder(
       bloc: listBloc,
+      // ignore: missing_return
       builder: (BuildContext context, ListState state) {
         if (state is Loading) {
           return Center(

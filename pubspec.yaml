@@ -10,7 +10,7 @@ description: Language
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.2.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -24,6 +24,11 @@ dependencies:
   sqflite: any
   equatable: ^0.1.5
   flutter_bloc: ^0.19.1
+  get_it: ^3.0.3
+  tflite: ^1.0.4
+  image_picker: ^0.6.2+1
+  camera: ^0.5.7
+  video_player: ^0.10.3+3
 
 dev_dependencies:
   flutter_test:
@@ -35,11 +40,15 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/mobilenet_v1_1.0_224.txt
+    - assets/mobilenet_v1_1.0_224.tflite
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

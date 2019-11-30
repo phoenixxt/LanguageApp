@@ -4,7 +4,7 @@ class DioProvider {
 
   Dio _dio;
   
-  Dio getDioClient() {
+  Dio dioClient() {
     if (_dio == null) {
       _dio = Dio();
     }
